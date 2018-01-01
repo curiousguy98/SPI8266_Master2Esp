@@ -95,6 +95,41 @@ public:
 
 ESPMaster esp(SS);
 
+// 数组数据整体按位左移一位
+int left_shift(unsigned char *str, int len)
+{
+	int i;
+	
+	for(i = 1; i <= len; i++)
+	{
+		str[i-1] = str[i-1] << 1;
+    
+    if(i < len && str[i] & MSB)
+    {
+    	str[i-1] = str[i-1] | LSB;    
+    }    
+	}
+
+	return 0;
+}
+
+// 数组数据整体按位右移一位
+int right_shift(unsigned char *str, int len)
+{
+  int i;
+
+  for(i = len-1; i >= 0; i--)
+  {
+    str[i] = str[i] >> 1;
+    if(i > 0 && str[i-1] & LSB)
+    {
+      str[i] = str[i] | MSB;    
+    }    
+  }
+  
+  return 0;    
+}
+
 void send(const char * message)
 {
     Serial.print("Master: ");
